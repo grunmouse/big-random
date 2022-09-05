@@ -1,0 +1,15 @@
+{
+  "name": "@grunmouse/big-random",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grunmouse/binary": "link:..\\binary",
+    "rc4": "^0.1.5"
+  }
+}
