@@ -11,7 +11,7 @@ function randomByteLim(max){
 	if(max === 0){
 		return 0; //Это число выбрано совершенно случайно на отрезке [0,0]
 	}
-	while{true}{
+	while(true){
 		let val = randomByte();
 		if(val<=max){
 			return val;
@@ -23,7 +23,7 @@ function randomUint32Lim(max){
 	if(max === 0){
 		return 0; //Это число выбрано совершенно случайно на отрезке [0,0]
 	}
-	while{true}{
+	while(true){
 		let val = randomUInt32();
 		if(val<=max){
 			return val;
@@ -64,20 +64,21 @@ function randomBigUintLim(lim){
 			}
 			else{
 				let limit = dvLim.getUint8(offset);
-				let val = randomByte();
-				if(val>max){
+				let val = limit > 0 ? randomByte() : 0;
+				
+				if(val>limit){
 					break; //Перезапуск генерации числа
 				}
 				else{
 					dv.setUint8(offset, val);
 					
-					accept = (val < max || offset ===0);
+					accept = (val < limit || offset ===0);
 				}
 			}
 		}
 	}
 	
-	const result = bigint.fromBuffer(bufer);
+	const result = bigint.fromBuffer(buffer);
 	
 	return result;
 }
