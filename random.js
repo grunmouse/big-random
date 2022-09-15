@@ -7,6 +7,9 @@ const randomUInt32 = rc4.randomUInt32.bind(rc4);
 
 const {bigint} = require('@grunmouse/binary');
 
+const over2 = (a)=>(Math.floor(Math.log2(a))+1);
+const makeMask = (a)=>((1<<over2(a)) - a);
+
 function randomByteLim(max){
 	if(max === 0){
 		return 0; //Это число выбрано совершенно случайно на отрезке [0,0]
@@ -56,6 +59,7 @@ function randomBigUintLim(lim){
 	const dv = new DataView(buffer);
 	
 	let accept = false;
+	let first = true;
 	while(!accept){
 		for(let offset = len; offset--; ){
 			if(accept){
@@ -65,6 +69,12 @@ function randomBigUintLim(lim){
 			else{
 				let limit = dvLim.getUint8(offset);
 				let val = limit > 0 ? randomByte() : 0;
+				
+				if(limit>0 && first){
+					let mask = makeMask(limit);
+					val = val & mask;
+					first = false;
+				}
 				
 				if(val>limit){
 					break; //Перезапуск генерации числа
