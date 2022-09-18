@@ -1,14 +1,14 @@
-const rc4 = new (require("rc4").RC4small);
+const rc4 = new (require("./rc4.js").RC4small);
 
 const currentStateString = rc4.currentStateString.bind(rc4);
 const setStateString = rc4.setStateString.bind(rc4);
 const randomByte = rc4.randomByte.bind(rc4);
 const randomUInt32 = rc4.randomUInt32.bind(rc4);
 
-const {bigint} = require('@grunmouse/binary');
+const {bigint, float64} = require('@grunmouse/binary');
 
-const over2 = (a)=>(Math.floor(Math.log2(a))+1);
-const makeMask = (a)=>((1<<over2(a)) - a);
+const over2 = float64.over2;
+const makeMask = (a)=>((1<<over2(a)) - 1);
 
 function randomByteLim(max){
 	if(max === 0){
@@ -51,6 +51,9 @@ function randomBigUint(size){
 }
 
 function randomBigUintLim(lim){
+	if(lim === 0n){
+		return 0n; //Это число выбрано совершенно случайно на отрезке [0,0]
+	}
 	const limBuffer = bigint.toBuffer(lim);
 	const len = limBuffer.byteLength;
 	const buffer = new ArrayBuffer(len);
