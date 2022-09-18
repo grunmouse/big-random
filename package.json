@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grunmouse/binary": "link:..\\binary",
-    "rc4": "^0.1.5"
+    "@grunmouse/binary": "link:..\\binary"
+  },
+  "devDependencies": {
+    "nist-randomness-test-suite": "^0.0.7"
   }
 }
