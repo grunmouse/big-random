@@ -46,8 +46,8 @@ class AbstractRC4 {
 	randomNative() {
 		let {i, j, s, N} = this;
 	  
-		i = (i + 1) % N;
-		j = (j + s[i]) % N;
+		i = (i + 1) % N; 
+		j = (j + s[i]) % N; 
 
 		swap(s, i, j);
 

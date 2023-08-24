@@ -5,10 +5,46 @@ const setStateString = rc4.setStateString.bind(rc4);
 const randomByte = rc4.randomByte.bind(rc4);
 const randomUInt32 = rc4.randomUInt32.bind(rc4);
 
-const {bigint, float64} = require('@grunmouse/binary');
+const bigint = require('./convert.js');
 
-const over2 = float64.over2;
-const makeMask = (a)=>((1<<over2(a)) - 1);
+function makeMaskUint8(val){
+	if(val >= 16){
+		if(val >= 64){
+			if(val >= 128){
+				return 255;
+			}
+			else{
+				return 127;
+			}
+		}
+		else{
+			if(val >= 32){
+				return 63;
+			}
+			else{
+				return 31;
+			}
+		}
+	}
+	else{
+		if(val >= 4){
+			if(val >= 8){
+				return 15;
+			}
+			else{
+				return 7;
+			}
+		}
+		else{
+			if(val >= 2){
+				return 3;
+			}
+			else{
+				return 1;
+			}
+		}
+	}
+}
 
 function randomByteLim(max){
 	if(max === 0){
@@ -37,7 +73,6 @@ function randomUint32Lim(max){
 function randomBigUint(size){
 	const buffer = new ArrayBuffer(size);
 	
-	const dvLim = new DataView(limBuffer);
 	const dv = new DataView(buffer);
 	
 	for(let offset = size; offset--; ){
@@ -45,7 +80,7 @@ function randomBigUint(size){
 		dv.setUint8(offset, val);
 	}
 	
-	const result = bigint.fromBuffer(bufer);
+	const result = bigint.fromBuffer(buffer);
 	
 	return result;
 }
@@ -74,7 +109,7 @@ function randomBigUintLim(lim){
 				let val = limit > 0 ? randomByte() : 0;
 				
 				if(limit>0 && first){
-					let mask = makeMask(limit);
+					let mask = makeMaskUint8(limit);
 					val = val & mask;
 					first = false;
 				}
