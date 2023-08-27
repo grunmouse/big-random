@@ -1,5 +1,7 @@
 "use strict";
 
+const AbstractRandom = require('./abstract-random.js');
+
 // Based on RC4 algorithm, as described in
 // http://en.wikipedia.org/wiki/RC4
 
@@ -12,8 +14,9 @@
       s[j] = tmp;
   }
 
-class AbstractRC4 {
+class AbstractRC4 extends AbstractRandom{
 	constructor(){
+		super();
 		const N = this.N;
 		let s = Array.from({length:N}, (x, i)=>(i)); //Тождественная перестановка
 
@@ -59,11 +62,6 @@ class AbstractRC4 {
 		return k;
 	}
 	
-	randomUInt32(){
-		const [a, b, c, d] = Array.from({length:4}, ()=>this.randomByte());
-		
-		return (((((a<<8) | b)<<8) | c)<<8)|d;
-	}
 }
 
 class RC4 extends AbstractRC4{
@@ -105,6 +103,7 @@ class RC4small extends AbstractRC4{
 
 RC4small.prototype.N = 16;
 
-RC4.RC4small = RC4small;
-
-module.exports = RC4;
+module.exports = {
+	RC4,
+	RC4small
+};

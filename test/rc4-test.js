@@ -1,7 +1,7 @@
 /* global describe, it */
 "use strict";
 
-var RC4 = require("../rc4.js");
+var {RC4, RC4small} = require("../rc4.js");
 var assert = require("assert");
 
 function sq(x) {
@@ -117,7 +117,7 @@ describe("χ² tests", function () {
 
 describe("RC4small", function () {
   it("randomNative returns integers in [0, 15]", function () {
-    var rc4 = new RC4.RC4small();
+    var rc4 = new RC4small();
     var N = 1000;
 
     for (var i = 0; i < N; i++) {
@@ -127,7 +127,7 @@ describe("RC4small", function () {
   });
 
   it("randomByte returns integers in [0, 255]", function () {
-    var rc4 = new RC4.RC4small();
+    var rc4 = new RC4small();
     var N = 1000;
 
     for (var i = 0; i < N; i++) {
@@ -138,7 +138,7 @@ describe("RC4small", function () {
 
   describe("currentStateString + setStateString", function () {
     it("can be used to reproduce values", function () {
-      var rc4 = new RC4.RC4small();
+      var rc4 = new RC4small();
       var state = rc4.currentStateString();
       var N = 100;
 
@@ -159,7 +159,7 @@ describe("RC4small", function () {
 
     it("throws an error if stateString is invalid", function () {
       assert.throws(function () {
-        var rc4 = new RC4.RC4small();
+        var rc4 = new RC4small();
         rc4.setStateString("abc");
       });
     });
@@ -169,7 +169,7 @@ describe("RC4small", function () {
 });
 
 describe("χ² tests, RC4small", function () {
-  var rc4 = new RC4.RC4small();
+  var rc4 = new RC4small();
 
   function run(N) {
       var i;
