@@ -90,7 +90,7 @@ class RC4small extends AbstractRC4{
 	};
 
 	setStateString(stateString) {
-		if (!stateString.match(/^[0-9a-f]{18}$/)) {
+		if (!stateString.match(/^[0-9a-f]{18}$/i)) {
 			throw new TypeError("RC4small stateString should be 18 hex character string");
 		}
 		
